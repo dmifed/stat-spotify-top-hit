@@ -32,6 +32,7 @@ public class CSVController {
     @GetMapping("/deciles/{column}")
     public ResponseEntity<List<Decile>> getDeciles(@PathVariable String column) {
        column = column.trim().toLowerCase();
+       Request req = new Request(column);
        List<Double> items = getItems(column);
        if(items.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
        return new ResponseEntity<>(items, HttpStatus.OK);
@@ -64,6 +65,19 @@ public class CSVController {
     }
 
     private List<Decile> calcDeciles(Request req, List<Double> items){
+        double sum = getItemsSum(req, items);
+        List<Double> deciles = new ArrayList<>();
+        for(int i = 1; i < 10; i++){ //9 positions for 10 decile intervals
+            double pos = i * (sum + 1) / 10; //positions of i-n decile
+            int posInt = (int) pos;
+            double belowNum = items.get(posInt);
+            double upper = items.get(posInt + 1);
+            double factor = upper - belowNum;
+            double decile = 
+
+
+
+        }
 
     }
 
